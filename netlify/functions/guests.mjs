@@ -2,6 +2,7 @@ import { getStore } from "@netlify/blobs";
 
 const STORE_NAME = "verzoeningstraat-feest-2026";
 const allowedDays = new Set(["zaterdag", "zondag", "beide"]);
+const allowedStatuses = new Set(["present", "not-coming"]);
 
 function clean(value, maxLength) {
   return String(value ?? "")
@@ -48,6 +49,7 @@ function validateGuest(body) {
   const houseNumber = clean(body?.houseNumber, 2);
   const bring = clean(body?.bring, 120);
   const day = clean(body?.day, 10);
+  const status = clean(body?.status || "present", 12);
   const numericHouseNumber = Number(houseNumber);
 
   if (!firstName) return { error: "Vul je voornaam in." };
@@ -55,8 +57,18 @@ function validateGuest(body) {
     return { error: "Vul een huisnummer van 1 tot en met 48 in." };
   }
   if (!allowedDays.has(day)) return { error: "Kies zaterdag, zondag of beide dagen." };
+  if (!allowedStatuses.has(status)) return { error: "Ongeldige aanwezigheidsstatus." };
 
-  return { guest: { firstName, houseNumber, day, bring } };
+  return { guest: { firstName, houseNumber, day, bring, status } };
+}
+
+function validateHouseNumber(value) {
+  const houseNumber = clean(value, 2);
+  const numericHouseNumber = Number(houseNumber);
+  if (!/^\d+$/.test(houseNumber) || numericHouseNumber < 1 || numericHouseNumber > 48) {
+    return { error: "Vul een huisnummer van 1 tot en met 48 in." };
+  }
+  return { houseNumber };
 }
 
 export default async (request, context) => {
@@ -64,6 +76,21 @@ export default async (request, context) => {
     const store = getGuestStore(context);
 
     if (request.method === "GET") {
+      return response({ guests: await readGuests(store) });
+    }
+
+    if (request.method === "DELETE") {
+      let body;
+      try {
+        body = await request.json();
+      } catch {
+        return response({ error: "Ongeldige gegevens ontvangen." }, 400);
+      }
+
+      const validated = validateHouseNumber(body?.houseNumber);
+      if (validated.error) return response(validated, 400);
+
+      await store.delete("house/" + validated.houseNumber);
       return response({ guests: await readGuests(store) });
     }
 

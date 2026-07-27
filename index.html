@@ -180,6 +180,19 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
 .form-lede { color: var(--muted); font-size: 9px; line-height: 1.35; margin: -5px 0 9px; }
 .form-edit-hint { color: var(--muted); font-size: 8px; line-height: 1.35; margin: -3px 0 9px; }
 .form-edit-hint.is-editing { color: var(--coral-deep); font-weight: 700; }
+.form-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.form-actions[hidden] { display: none; }
+.form-action { background: transparent; border: 1px solid rgba(32, 57, 54, .18); border-radius: 9px; color: var(--muted); cursor: pointer; flex: 1 1 140px; font: inherit; font-size: 8px; font-weight: 700; padding: 9px 10px; }
+.form-action:hover { background: rgba(255, 250, 240, .65); color: var(--ink); }
+.form-action.delete { color: var(--coral-deep); }
+.form-action.delete:hover { background: rgba(242, 113, 87, .08); }
+.not-coming-list { background: rgba(247, 240, 228, .58); border: 1px solid rgba(32, 57, 54, .1); border-radius: 12px; margin: 8px 0 10px; padding: 8px 9px; }
+.not-coming-list[hidden] { display: none; }
+.not-coming-head { color: var(--muted); font-size: 8px; font-weight: 700; margin-bottom: 6px; }
+.not-coming-head span { color: var(--coral-deep); margin-left: 3px; }
+.not-coming-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.not-coming-pill { background: rgba(255, 250, 240, .8); border: 1px solid rgba(32, 57, 54, .1); border-radius: 999px; color: var(--muted); font-size: 8px; padding: 5px 7px; }
+.not-coming-pill strong { color: var(--ink); }
 .field-row label, .bring-field { display: block; }
 .field-row input, .bring-field input { background: rgba(255, 250, 240, .74); border: 1px solid rgba(32, 57, 54, .12); border-radius: 9px; margin-top: 5px; padding: 10px 11px; }
 .quick-days span { align-items: center; display: flex; flex-direction: column; gap: 2px; padding: 8px 4px; }
@@ -400,7 +413,7 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
         <section class="presence-card" id="erbij" aria-labelledby="presence-title">
           <div class="presence-card-head"><div><p class="card-label">Het buuroverzicht</p><span class="house-count" id="house-count">0 groene huizen</span></div><span class="sun-mark">&#9728;</span></div>
           <h2 id="presence-title">Wie schuift aan?</h2>
-          <p class="presence-intro">Vul je voornaam, huisnummer en dag in. Zo weten je buren dat je erbij bent.</p>
+          <p class="presence-intro">Vul je gegevens in om erbij te zijn of te tonen dat je niet kunt komen.</p>
           <div class="street-map-card">
             <div class="map-card-head"><strong>VERZOENINGSTRAAT</strong><span>alle huizen in beeld</span></div>
             <div class="map-scroll"><div class="street-plan"><div class="map-house-row" id="street-left"></div><div class="street-road"><span>VERZOENINGSTRAAT</span></div><div class="map-house-row" id="street-right"></div></div></div>
@@ -408,6 +421,7 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
           </div>
           <div class="guest-toolbar"><div class="filter-tabs" role="group" aria-label="Toon aanwezigen per dag"><button type="button" data-filter="alle" class="active">Iedereen</button><button type="button" data-filter="zaterdag">Zaterdag</button><button type="button" data-filter="zondag">Zondag</button></div><span id="guest-total" aria-live="polite">0 aanwezig</span></div>
           <div class="guest-list" id="guest-list" aria-live="polite"></div>
+          <div class="not-coming-list" id="not-coming-list" aria-live="polite" hidden></div>
           <form class="quick-form" id="quick-form">
             <p class="form-title">Jouw huis op de kaart</p><p class="form-lede">Laat je buren weten dat je erbij bent.</p>
             <p class="form-edit-hint" id="form-edit-hint" aria-live="polite">Al ingevuld? Gebruik hetzelfde huisnummer om je inzending aan te passen.</p>
@@ -416,8 +430,12 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
             <div class="quick-days"><label><input type="radio" name="day" value="zaterdag" checked><span>ZA 29</span></label><label><input type="radio" name="day" value="zondag"><span>ZO 30</span></label><label><input type="radio" name="day" value="beide"><span>BEIDE</span></label></div>
             <p class="form-message form-error" id="form-error" hidden></p><p class="form-message form-success" id="form-success" hidden>Gezellig, je huis staat groen! &#128075;&#127997;</p>
             <button class="quick-submit" type="submit">Zet mij erbij <b>&rarr;</b></button>
+            <div class="form-actions" id="form-actions" hidden>
+              <button class="form-action" id="not-coming-button" type="button">Ik kan niet komen</button>
+              <button class="form-action delete" id="delete-button" type="button">Mijn inzending verwijderen</button>
+            </div>
           </form>
-          <p class="privacy-note sync-note" id="sync-note" aria-live="polite">De gedeelde lijst wordt geladen&hellip;</p><p class="not-coming-note"><b>Kun je niet komen?</b> Geen probleem &mdash; je hoeft niets in te vullen. Alleen als je erbij bent, zet je je huis op groen.</p>
+          <p class="privacy-note sync-note" id="sync-note" aria-live="polite">De gedeelde lijst wordt geladen&hellip;</p><p class="not-coming-note"><b>Kun je niet komen?</b> Vul je voornaam en huisnummer in en kies daarna voor <b>Ik kan niet komen</b>. Je naam blijft dan zichtbaar bij de buren, maar je huis kleurt niet groen.</p>
         </section>
       </div>
 
@@ -477,6 +495,18 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
       }
     }
 
+
+    async function getGuestPayload(response, fallbackMessage) {
+      let payload = {};
+      try { payload = await response.json(); } catch {}
+      if (!response.ok || !Array.isArray(payload.guests)) {
+        const statusHint = response.status ? " (status " + response.status + ")" : "";
+        const message = payload.error || fallbackMessage;
+        throw new Error(message + statusHint + ". Probeer opnieuw.");
+      }
+      return payload.guests;
+    }
+
     async function saveGuest(guest) {
       if (isLocalFile) {
         guests = [...guests.filter(item => item.houseNumber !== guest.houseNumber), guest];
@@ -489,19 +519,32 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
         headers: { "content-type": "application/json" },
         body: JSON.stringify(guest),
       });
-      let payload = {};
-      try { payload = await response.json(); } catch {}
-      if (!response.ok || !Array.isArray(payload.guests)) {
-        const statusHint = response.status ? " (status " + response.status + ")" : "";
-        throw new Error(payload.error || "Opslaan lukt nu niet" + statusHint + ". Probeer opnieuw.");
-      }
+      const nextGuests = await getGuestPayload(response, "Opslaan lukt nu niet");
       setSyncMessage("Opgeslagen: alle buren kunnen dit nu zien.");
-      return payload.guests;
+      return nextGuests;
+    }
+
+    async function removeGuest(houseNumber) {
+      if (isLocalFile) {
+        guests = guests.filter(item => item.houseNumber !== houseNumber);
+        saveLocalGuests();
+        return guests;
+      }
+
+      const response = await fetch(API_URL, {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ houseNumber }),
+      });
+      const nextGuests = await getGuestPayload(response, "Verwijderen lukt nu niet");
+      setSyncMessage("Je inzending is verwijderd.");
+      return nextGuests;
     }
 
     let guests = [];
     let activeFilter = "alle";
     let editHouseNumber = "";
+
 
     function syncEditState() {
       const form = document.querySelector("#quick-form");
@@ -510,10 +553,15 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
       const bringInput = form.elements.bring;
       const editHint = document.querySelector("#form-edit-hint");
       const submitButton = form.querySelector("button[type=submit]");
+      const actionBar = document.querySelector("#form-actions");
+      const notComingButton = document.querySelector("#not-coming-button");
+      const deleteButton = document.querySelector("#delete-button");
       const houseNumber = String(houseInput.value || "").trim();
-      const existing = guests.find(guest => String(guest.houseNumber) === houseNumber);
+      const validHouseNumber = /^\d+$/.test(houseNumber);
+      const existing = validHouseNumber ? guests.find(guest => String(guest.houseNumber) === houseNumber) : null;
+      const alreadyNotComing = Boolean(existing && existing.status === "not-coming");
 
-      if (!/^\d+$/.test(houseNumber) || !existing) {
+      if (!validHouseNumber || !existing) {
         if (editHouseNumber) {
           firstNameInput.value = "";
           bringInput.value = "";
@@ -524,26 +572,38 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
         editHint.textContent = "Al ingevuld? Gebruik hetzelfde huisnummer om je inzending aan te passen.";
         editHint.classList.remove("is-editing");
         submitButton.innerHTML = "Zet mij erbij <b>&rarr;</b>";
-        return;
+      } else {
+        editHouseNumber = houseNumber;
+        firstNameInput.value = existing.firstName;
+        bringInput.value = existing.bring || "";
+        const dayInput = form.querySelector('input[name="day"][value="' + existing.day + '"]');
+        if (dayInput) dayInput.checked = true;
+        editHint.classList.add("is-editing");
+        if (alreadyNotComing) {
+          editHint.textContent = "Je hebt aangeduid dat je niet kunt komen. Klik op de knop om dit aan te passen.";
+          submitButton.innerHTML = "Ik ben toch erbij <b>&rarr;</b>";
+        } else {
+          editHint.textContent = "Je bestaande inzending is ingeladen. Pas ze aan en sla opnieuw op.";
+          submitButton.innerHTML = "Wijziging opslaan <b>&rarr;</b>";
+        }
       }
 
-      editHouseNumber = houseNumber;
-      firstNameInput.value = existing.firstName;
-      bringInput.value = existing.bring || "";
-      const dayInput = form.querySelector('input[name="day"][value="' + existing.day + '"]');
-      if (dayInput) dayInput.checked = true;
-      editHint.textContent = "Je bestaande inzending is ingeladen. Pas ze aan en sla opnieuw op.";
-      editHint.classList.add("is-editing");
-      submitButton.innerHTML = "Wijziging opslaan <b>&rarr;</b>";
+      notComingButton.hidden = !validHouseNumber || alreadyNotComing;
+      deleteButton.hidden = !existing;
+      actionBar.hidden = notComingButton.hidden && deleteButton.hidden;
     }
-
 
     function esc(value) {
       return String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
     }
 
+
+    function isNotComing(guest) {
+      return guest.status === "not-coming";
+    }
+
     function namesAtHouse(number) {
-      return guests.filter(guest => Number.parseInt(guest.houseNumber, 10) === number).map(guest => guest.firstName).join(", ");
+      return guests.filter(guest => !isNotComing(guest) && Number.parseInt(guest.houseNumber, 10) === number).map(guest => guest.firstName).join(", ");
     }
 
     function houseButton(number) {
@@ -563,23 +623,38 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
         input.focus();
         input.select();
       }));
-      const houses = new Set(guests.map(guest => guest.houseNumber));
+      const houses = new Set(guests.filter(guest => !isNotComing(guest)).map(guest => guest.houseNumber));
       document.querySelector("#house-count").textContent = `${houses.size} groene huizen`;
     }
 
+
     function visibleGuests() {
-      return activeFilter === "alle" ? guests : guests.filter(guest => guest.day === activeFilter || guest.day === "beide");
+      const presentGuests = guests.filter(guest => !isNotComing(guest));
+      return activeFilter === "alle" ? presentGuests : presentGuests.filter(guest => guest.day === activeFilter || guest.day === "beide");
     }
 
     function renderGuests() {
       const shown = visibleGuests();
-      document.querySelector("#guest-total").textContent = `${shown.length} aanwezig`;
-      document.querySelector("#guest-list").innerHTML = shown.map(guest => `<div class="guest-pill"><span class="guest-number">${esc(guest.houseNumber)}</span><span><strong>${esc(guest.firstName)}</strong><small>${esc(guest.day)}${guest.bring ? " - " + esc(guest.bring) : ""}</small></span></div>`).join("");
+      document.querySelector("#guest-total").textContent = shown.length + " aanwezig";
+      document.querySelector("#guest-list").innerHTML = shown.map(guest => "<div class=\"guest-pill\"><span class=\"guest-number\">" + esc(guest.houseNumber) + "</span><span><strong>" + esc(guest.firstName) + "</strong><small>" + esc(guest.day) + (guest.bring ? " - " + esc(guest.bring) : "") + "</small></span></div>").join("");
+    }
+
+    function renderNotComing() {
+      const notComing = guests.filter(guest => isNotComing(guest));
+      const box = document.querySelector("#not-coming-list");
+      if (!notComing.length) {
+        box.hidden = true;
+        box.innerHTML = "";
+        return;
+      }
+      box.hidden = false;
+      box.innerHTML = "<div class=\"not-coming-head\">Kunnen er niet bij zijn <span>" + notComing.length + "</span></div><div class=\"not-coming-pills\">" + notComing.map(guest => "<span class=\"not-coming-pill\"><strong>" + esc(guest.firstName) + "</strong> (" + esc(guest.houseNumber) + ")</span>").join("") + "</div>";
     }
 
     function render() {
       renderMap();
       renderGuests();
+      renderNotComing();
       syncEditState();
     }
 
@@ -591,40 +666,97 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
 
     document.querySelector('input[name="houseNumber"]').addEventListener("input", syncEditState);
 
-    document.querySelector("#quick-form").addEventListener("submit", async event => {
-      event.preventDefault();
-      const formElement = event.currentTarget;
-      const submitButton = formElement.querySelector("button[type=submit]");
-      const form = new FormData(formElement);
-      const firstName = String(form.get("firstName") || "").trim();
-      const houseNumber = String(form.get("houseNumber") || "").trim();
-      const day = String(form.get("day") || "");
-      const bring = String(form.get("bring") || "").trim();
-      const error = document.querySelector("#form-error");
-      const success = document.querySelector("#form-success");
 
-      if (!firstName || !/^\d+$/.test(houseNumber) || Number(houseNumber) < 1 || Number(houseNumber) > 48 || !["zaterdag", "zondag", "beide"].includes(day)) {
+    function readFormValues() {
+      const form = new FormData(document.querySelector("#quick-form"));
+      return {
+        firstName: String(form.get("firstName") || "").trim(),
+        houseNumber: String(form.get("houseNumber") || "").trim(),
+        day: String(form.get("day") || ""),
+        bring: String(form.get("bring") || "").trim(),
+      };
+    }
+
+    function validateFormValues(values) {
+      const error = document.querySelector("#form-error");
+      if (!values.firstName || !/^\d+$/.test(values.houseNumber) || Number(values.houseNumber) < 1 || Number(values.houseNumber) > 48 || !["zaterdag", "zondag", "beide"].includes(values.day)) {
         error.textContent = "Vul je voornaam, huisnummer van 1 tot en met 48 en een dag in.";
         error.hidden = false;
-        success.hidden = true;
-        return;
+        document.querySelector("#form-success").hidden = true;
+        return false;
       }
-
-      submitButton.disabled = true;
       error.hidden = true;
+      return true;
+    }
+
+    async function saveFormStatus(status) {
+      const formElement = document.querySelector("#quick-form");
+      const submitButton = formElement.querySelector("button[type=submit]");
+      const notComingButton = document.querySelector("#not-coming-button");
+      const deleteButton = document.querySelector("#delete-button");
+      const values = readFormValues();
+      const error = document.querySelector("#form-error");
+      const success = document.querySelector("#form-success");
+      if (!validateFormValues(values)) return;
+
+      [submitButton, notComingButton, deleteButton].forEach(button => { if (button) button.disabled = true; });
       success.hidden = true;
       try {
-        guests = await saveGuest({ firstName, houseNumber, day, bring });
+        guests = await saveGuest({ ...values, status });
+        success.textContent = status === "not-coming"
+          ? "Genoteerd. Je naam staat bij de buren als niet aanwezig."
+          : "Gezellig, je huis staat groen! 👋🏼";
         success.hidden = false;
         formElement.reset();
+        editHouseNumber = "";
         render();
       } catch (saveError) {
         error.textContent = saveError.message;
         error.hidden = false;
       } finally {
-        submitButton.disabled = false;
+        [submitButton, notComingButton, deleteButton].forEach(button => { if (button) button.disabled = false; });
       }
+    }
+
+    async function deleteFormEntry() {
+      const formElement = document.querySelector("#quick-form");
+      const houseNumber = String(formElement.elements.houseNumber.value || "").trim();
+      const error = document.querySelector("#form-error");
+      const success = document.querySelector("#form-success");
+      if (!/^\d+$/.test(houseNumber)) return;
+      if (!window.confirm("Wil je je inzending voor huisnummer " + houseNumber + " echt verwijderen?")) return;
+
+      const submitButton = formElement.querySelector("button[type=submit]");
+      const notComingButton = document.querySelector("#not-coming-button");
+      const deleteButton = document.querySelector("#delete-button");
+      [submitButton, notComingButton, deleteButton].forEach(button => { if (button) button.disabled = true; });
+      error.hidden = true;
+      success.hidden = true;
+      try {
+        guests = await removeGuest(houseNumber);
+        success.textContent = "Je inzending is verwijderd.";
+        success.hidden = false;
+        formElement.reset();
+        editHouseNumber = "";
+        render();
+      } catch (deleteError) {
+        error.textContent = deleteError.message;
+        error.hidden = false;
+      } finally {
+        [submitButton, notComingButton, deleteButton].forEach(button => { if (button) button.disabled = false; });
+      }
+    }
+
+    document.querySelector("#quick-form").addEventListener("submit", event => {
+      event.preventDefault();
+      saveFormStatus("present");
     });
+
+    document.querySelector("#not-coming-button").addEventListener("click", () => {
+      saveFormStatus("not-coming");
+    });
+
+    document.querySelector("#delete-button").addEventListener("click", deleteFormEntry);
 
     document.querySelector("#calendar-link").href = "/straatfeest-verzoeningstraat-2026.ics";
     render();
