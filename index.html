@@ -375,7 +375,7 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
               <div class="date-hero-meta"><strong>AUGUSTUS 2026</strong><small>12:00&ndash;23:00 &middot; BEIDE DAGEN</small></div>
             </div>
           </div>
-          <a class="calendar-link" id="calendar-link" href="#" download="straatfeest-verzoeningstraat-2026.ics" aria-label="Zet het straatfeest van zaterdag en zondag in je gsm-agenda">
+          <a class="calendar-link" id="calendar-link" href="/straatfeest-verzoeningstraat-2026.ics" type="text/calendar" aria-label="Zet het straatfeest van zaterdag en zondag in je gsm-agenda">
             <span class="calendar-icon">+</span><span><b>Zet in je agenda</b></span><strong>&rarr;</strong>
           </a>
           <div class="program-preview" id="programma">
@@ -429,7 +429,6 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
     const starterGuests = [];
     const streetLeft = Array.from({ length: 24 }, (_, i) => i * 2 + 1);
     const streetRight = Array.from({ length: 24 }, (_, i) => i * 2 + 2);
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Verzoeningstraat//Straatfeest 2026//NL\nBEGIN:VEVENT\nDTSTART;TZID=Europe/Brussels:20260829T120000\nDTEND;TZID=Europe/Brussels:20260829T230000\nSUMMARY:Straatfeest Verzoeningstraat - barbecue\nEND:VEVENT\nBEGIN:VEVENT\nDTSTART;TZID=Europe/Brussels:20260830T120000\nDTEND;TZID=Europe/Brussels:20260830T230000\nSUMMARY:Straatfeest Verzoeningstraat - gerechtenbuffet\nEND:VEVENT\nEND:VCALENDAR`;
 
     function loadLocalGuests() {
       try {
@@ -584,7 +583,7 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
       }
     });
 
-    document.querySelector("#calendar-link").href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+    document.querySelector("#calendar-link").href = "/straatfeest-verzoeningstraat-2026.ics";
     render();
     loadGuests();
   </script>

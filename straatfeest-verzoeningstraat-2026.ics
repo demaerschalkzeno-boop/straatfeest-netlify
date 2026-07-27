@@ -1,0 +1,32 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Verzoeningstraat//Straatfeest 2026//NL
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Straatfeest Verzoeningstraat 2026
+X-WR-TIMEZONE:Europe/Brussels
+BEGIN:VEVENT
+UID:straatfeest-verzoeningstraat-2026-08-29@verzoeningstraat
+DTSTAMP:20260727T120000Z
+DTSTART:20260829T100000Z
+DTEND:20260829T210000Z
+SUMMARY:Straatfeest Verzoeningstraat - barbecue
+LOCATION:Verzoeningstraat\, Antwerpen
+DESCRIPTION:Barbecue met vlees\, veggie\, halal en drank. Breng zelf een side salade of bijgerecht mee.
+STATUS:CONFIRMED
+SEQUENCE:0
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:straatfeest-verzoeningstraat-2026-08-30@verzoeningstraat
+DTSTAMP:20260727T120000Z
+DTSTART:20260830T100000Z
+DTEND:20260830T210000Z
+SUMMARY:Straatfeest Verzoeningstraat - gerechtenbuffet
+LOCATION:Verzoeningstraat\, Antwerpen
+DESCRIPTION:Gerechtenbuffet om samen te delen. Breng zelf een gerecht mee.
+STATUS:CONFIRMED
+SEQUENCE:0
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
