@@ -365,6 +365,112 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
 
 .map-house:nth-child(3n + 2):not(.active)::before { background: #d4a14e; }
 .map-house:nth-child(4n):not(.active)::before { background: #b9849a; }.sync-note.sync-error { color: var(--coral-deep); font-weight: 700; }
+
+/* Mobile-first foundation: compact, touch-friendly and readable before scaling up. */
+html { font-size: 16px; }
+body { overflow-x: hidden; }
+.summer-page { min-height: auto; }
+.summer-inner { min-height: auto; padding: 14px 14px 16px; }
+.decorative-sun { font-size: 72px; right: -8px; top: -44px; }
+.topbar { gap: 8px; }
+.brand { font-size: 11px; gap: 7px; }
+.brand-dot { font-size: 17px; height: 30px; width: 30px; }
+.topbar-link { font-size: 9px; }
+.summer-grid { align-items: stretch; display: flex; flex-direction: column; gap: 26px; margin: 0; padding: 48px 0 20px; }
+.hero-copy { max-width: none; }
+h1 { font-size: clamp(54px, 16vw, 68px); margin-bottom: 17px; }
+.hero-lede { font-size: 14px; line-height: 1.5; margin-bottom: 17px; max-width: none; }
+.date-hero { gap: 8px; margin-bottom: 16px; }
+.date-hero-days { gap: 5px; }
+.date-hero-days > span strong { font-size: 43px; }
+.date-hero-meta { padding-left: 8px; }
+.date-hero-meta strong { font-size: 8px; }
+.date-hero-meta small { font-size: 7px; white-space: normal; }
+.calendar-link { margin-bottom: 18px; max-width: none; }
+.program-preview { gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.program-card { border-radius: 16px; min-height: 146px; padding: 12px 11px; }
+.program-card-top { font-size: 8px; }
+.program-card-top strong { font-size: 8px; padding: 5px 6px; }
+.program-card h2 { font-size: clamp(20px, 6.4vw, 26px); margin: 18px 0 6px; }
+.program-card p { font-size: 9px; line-height: 1.35; }
+.program-card small { font-size: 8px; }
+.warm-note { font-size: 10px; margin-top: 13px; }
+.presence-card { border-radius: 20px; max-width: none; padding: 16px 13px 14px; width: 100%; }
+.presence-card h2 { font-size: 34px; margin-top: 7px; }
+.presence-intro { font-size: 9px; line-height: 1.4; margin-bottom: 10px; }
+.street-map-card { padding: 9px 8px 7px; }
+.map-card-head { font-size: 7px; padding-bottom: 7px; }
+.map-card-head span { font-size: 7px; }
+.map-house-row { gap: 0; }
+.map-house { height: 32px; }
+.map-house span { font-size: 7px; }
+.street-road { height: 27px; margin: 4px 0; }
+.street-road span { font-size: 6px; }
+.map-legend { font-size: 7px; gap: 9px; padding-top: 6px; }
+.guest-toolbar { margin-top: 9px; }
+.filter-tabs { gap: 4px; }
+.filter-tabs button { min-height: 36px; padding: 7px 8px; }
+.guest-list { max-height: 150px; overflow: auto; }
+.quick-form { padding: 14px 12px 12px; }
+.field-row { gap: 8px; grid-template-columns: minmax(0, 1fr) 64px; }
+.field-row input, .bring-field input { font-size: 16px; min-height: 44px; padding: 9px; }
+.bring-field { margin-top: 9px; }
+.quick-days { gap: 5px; margin: 9px 0; }
+.quick-days span { align-items: center; min-height: 42px; padding: 8px 3px; }
+.quick-submit { min-height: 44px; padding: 11px 13px; }
+.form-action { min-height: 42px; }
+.privacy-note { font-size: 8px; }
+.bottom-line { align-items: flex-start; flex-direction: column; gap: 7px; padding-left: 0; padding-right: 0; }
+
+@media (max-width: 359px) {
+  h1 { font-size: 52px; }
+  .presence-card h2 { font-size: 31px; }
+  .program-card h2 { font-size: 20px; }
+  .program-card p { font-size: 8px; }
+  .date-hero-days > span strong { font-size: 38px; }
+}
+
+@media (min-width: 760px) {
+  .summer-inner { padding: 18px 22px 16px; }
+  .summer-grid { gap: 36px; padding: 58px 0 36px; }
+  .hero-copy { max-width: 650px; }
+  .presence-card { max-width: 720px; padding: 20px 20px 16px; }
+  .program-card { min-height: 162px; padding: 15px 16px 14px; }
+  .program-card h2 { font-size: 30px; }
+  .field-row input, .bring-field input { font-size: 12px; min-height: 0; padding: 10px 11px; }
+}
+
+@media (min-width: 1041px) {
+  .summer-page { min-height: 100svh; }
+  .summer-inner { min-height: 100svh; padding: 19px 34px 17px; }
+  .summer-grid { align-items: center; display: grid; gap: clamp(28px, 4.4vw, 68px); grid-template-columns: minmax(0, .88fr) minmax(500px, 1.12fr); margin: auto 0; padding: 28px 3.2% 18px; }
+  .presence-card { max-width: 680px; padding: 22px 22px 18px; }
+  .presence-card h2 { font-size: 39px; }
+  .program-preview { grid-template-columns: repeat(2, minmax(190px, 242px)); }
+  .program-card { min-height: 178px; }
+  .bottom-line { flex-direction: row; }
+}
+
+
+/* Participant-first actions: the next step is visible before the map. */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: -2px 0 8px; }
+.hero-primary, .hero-secondary { align-items: center; border-radius: 999px; display: inline-flex; font-size: 10px; font-weight: 700; justify-content: space-between; min-height: 44px; padding: 10px 13px; }
+.hero-primary { background: var(--yellow); color: var(--ink); flex: 1 1 170px; }
+.hero-primary b { font-size: 15px; margin-left: 12px; }
+.hero-secondary { border: 1px solid rgba(255, 250, 240, .55); color: var(--paper); flex: 1 1 140px; }
+.hero-secondary:hover { background: rgba(255, 250, 240, .12); }
+.hero-privacy { color: rgba(255, 250, 240, .7); font-size: 8px; line-height: 1.35; margin: 0 0 14px; }
+@media (min-width: 760px) {
+  .hero-actions { max-width: 430px; }
+  .hero-primary, .hero-secondary { min-height: 42px; }
+}
+
+
+.calendar-choices { align-items: center; display: flex; flex-wrap: wrap; gap: 5px; margin: -9px 0 15px; }
+.calendar-choices-label { color: rgba(255, 250, 240, .72); font-size: 8px; font-weight: 700; }
+.calendar-choices a { border: 1px solid rgba(255, 250, 240, .45); border-radius: 999px; color: var(--paper); font-size: 8px; font-weight: 700; padding: 6px 8px; }
+.calendar-choices a:hover { background: rgba(255, 250, 240, .12); }
+
 </style>
 </head>
 <body>
@@ -375,13 +481,13 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
       <header class="topbar">
         <a class="brand" href="#top"><span class="brand-dot">V</span><span>Verzoeningstraat</span></a>
         <div class="topbar-pill">STRAATFEEST &middot; 2026</div>
-        <a class="topbar-link" href="#erbij">Ik ben erbij <b>&darr;</b></a>
+        <a class="topbar-link" href="#quick-form">Ik ben erbij <b>&darr;</b></a>
       </header>
 
       <div class="summer-grid">
         <section class="hero-copy" aria-labelledby="main-title">
           <h1 id="main-title">Samen<br><em>aan tafel.</em></h1>
-          <p class="hero-lede">Twee dagen lang maken we van onze straat een gezellige plek om te eten, babbelen en nieuwe buren te leren kennen. De straat is afgesloten voor verkeer, dus ook kinderen kunnen buiten spelen.</p>
+          <p class="hero-lede">Twee dagen lang eten we samen, leren we nieuwe buren kennen en maken we plaats voor spelende kinderen. De straat is afgesloten voor verkeer.</p>
           <div class="date-hero" aria-label="Straatfeest op zaterdag 29 en zondag 30 augustus 2026">
             <div class="date-hero-days">
               <span><strong>29</strong><small>ZA</small></span>
@@ -391,8 +497,19 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
             </div>
           </div>
           <a class="calendar-link" id="calendar-link" href="/straatfeest-verzoeningstraat-2026.ics" type="text/calendar" aria-label="Zet het straatfeest van zaterdag en zondag in je gsm-agenda">
-            <span class="calendar-icon">+</span><span><b>Zet in je agenda</b></span><strong>&rarr;</strong>
+            <span class="calendar-icon">+</span><span><b>Zet in je agenda</b><small>Apple, iPhone of Outlook (.ics)</small></span><strong>&rarr;</strong>
           </a>
+          <div class="calendar-choices" aria-label="Kies een andere agenda">
+            <span class="calendar-choices-label">Ook via:</span>
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Straatfeest%20Verzoeningstraat&dates=20260829T100000Z%2F20260829T210000Z&details=Samen%20eten%20en%20buren%20leren%20kennen.%20Zondag%3A%20pot%20luck.%20De%20straat%20is%20afgesloten%20voor%20verkeer.&location=Verzoeningstraat%2C%20Antwerpen&recur=RRULE%3AFREQ%3DDAILY%3BCOUNT%3D2" target="_blank" rel="noopener">Google Calendar</a>
+            <a href="https://outlook.live.com/calendar/0/deeplink/compose?rru=addevent&allday=false&subject=Straatfeest%20Verzoeningstraat&body=Samen%20eten%20en%20buren%20leren%20kennen.&location=Verzoeningstraat%2C%20Antwerpen&startdt=2026-08-29T10%3A00%3A00Z&enddt=2026-08-29T21%3A00%3A00Z&path=%2Fcalendar%2Faction%2Fcompose" target="_blank" rel="noopener">Outlook za</a>
+            <a href="https://outlook.live.com/calendar/0/deeplink/compose?rru=addevent&allday=false&subject=Straatfeest%20Verzoeningstraat&body=Pot%20luck%3A%20samen%20een%20gerecht%20delen.&location=Verzoeningstraat%2C%20Antwerpen&startdt=2026-08-30T10%3A00%3A00Z&enddt=2026-08-30T21%3A00%3A00Z&path=%2Fcalendar%2Faction%2Fcompose" target="_blank" rel="noopener">Outlook zo</a>
+          </div>
+          <div class="hero-actions" aria-label="Kies je antwoord">
+            <a class="hero-primary" href="#quick-form">Ik ben erbij <b>&rarr;</b></a>
+            <a class="hero-secondary" href="#quick-form">Ik kan niet komen</a>
+          </div>
+          <p class="hero-privacy">Je voornaam en huisnummer zijn zichtbaar voor de buren.</p>
           <div class="program-preview" id="programma">
             <article class="program-card program-coral">
               <div class="program-card-top"><span>ZA 29 AUG</span><strong>12&ndash;23 u</strong></div>
@@ -402,8 +519,8 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
             </article>
             <article class="program-card program-lime">
               <div class="program-card-top"><span>ZO 30 AUG</span><strong>12&ndash;23 u</strong></div>
-              <h2>Gerechtenbuffet</h2>
-              <p>Wij maken samen een buffet vol smaken uit de straat.</p>
+              <h2>Pot luck</h2>
+              <p>Iedereen brengt een gerecht mee om samen te delen.</p>
               <small class="bring-strong"><b>Zelf meebrengen</b>Een gerecht om te delen.</small>
             </article>
           </div>
@@ -423,13 +540,13 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
           <div class="guest-list" id="guest-list" aria-live="polite"></div>
           <div class="not-coming-list" id="not-coming-list" aria-live="polite" hidden></div>
           <form class="quick-form" id="quick-form">
-            <p class="form-title">Jouw huis op de kaart</p><p class="form-lede">Laat je buren weten dat je erbij bent.</p>
+            <p class="form-title">Laat weten dat je erbij bent</p><p class="form-lede">Vul je voornaam en huisnummer in. Je kunt dit later aanpassen.</p>
             <p class="form-edit-hint" id="form-edit-hint" aria-live="polite">Al ingevuld? Gebruik hetzelfde huisnummer om je inzending aan te passen.</p>
             <div class="field-row"><label><span>Voornaam</span><input name="firstName" type="text" required placeholder="bv. Zeno" autocomplete="given-name"></label><label><span>Nr.</span><input name="houseNumber" type="text" required placeholder="bv. 14" inputmode="numeric"></label></div>
             <label class="bring-field"><span>Wat neem je mee? <em>optioneel</em></span><input name="bring" type="text" placeholder="bv. side salade, dessert..."><small class="bring-hint">Zaterdag: side salade of bijgerecht &middot; zondag: gerecht om te delen.</small></label>
             <div class="quick-days"><label><input type="radio" name="day" value="zaterdag" checked><span>ZA 29</span></label><label><input type="radio" name="day" value="zondag"><span>ZO 30</span></label><label><input type="radio" name="day" value="beide"><span>BEIDE</span></label></div>
             <p class="form-message form-error" id="form-error" hidden></p><p class="form-message form-success" id="form-success" hidden>Gezellig, je huis staat groen! &#128075;&#127997;</p>
-            <button class="quick-submit" type="submit">Zet mij erbij <b>&rarr;</b></button>
+            <button class="quick-submit" type="submit">Ik ben erbij <b>&rarr;</b></button>
             <div class="form-actions" id="form-actions" hidden>
               <button class="form-action" id="not-coming-button" type="button">Ik kan niet komen</button>
               <button class="form-action delete" id="delete-button" type="button">Mijn inzending verwijderen</button>
