@@ -101,8 +101,9 @@ h1 em { color: #ffc69d; font-style: normal; }
 .legend-dot { background: rgba(255, 250, 240, .82); border: 1px solid rgba(32, 57, 54, .1); border-radius: 50%; display: inline-block; height: 9px; width: 9px; }
 .legend-dot.active { background: #62b878; border-color: #438f58; }
 
-.guest-toolbar { align-items: center; display: flex; justify-content: space-between; margin-top: 10px; }
+.guest-toolbar { align-items: flex-end; display: flex; justify-content: space-between; margin-top: 10px; }
 .guest-toolbar > span { color: var(--muted); font-size: 9px; }
+.filter-label { color: var(--muted); display: block; font-size: 8px; font-weight: 700; letter-spacing: .04em; margin: 0 0 5px 2px; }
 .filter-tabs { display: flex; gap: 5px; }
 .filter-tabs button { background: transparent; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); cursor: pointer; font-size: 9px; font-weight: 700; padding: 6px 8px; }
 .filter-tabs button.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
@@ -120,6 +121,9 @@ h1 em { color: #ffc69d; font-style: normal; }
 .field-row input:focus, .bring-field input:focus { border-color: var(--coral); }
 .bring-field { display: block; margin-top: 8px; }
 .bring-field em { color: var(--muted); font-size: 7px; font-style: normal; font-weight: 500; letter-spacing: 0; text-transform: lowercase; }
+.day-choice-head { align-items: baseline; display: flex; gap: 5px; margin: 9px 0 0; }
+.day-choice-head strong { color: var(--ink); font-size: 8px; }
+.day-choice-head span { color: var(--muted); font-size: 7px; }
 .quick-days { display: flex; gap: 5px; margin: 8px 0; }
 .quick-days label { flex: 1; }
 .quick-days input { opacity: 0; position: absolute; }
@@ -525,7 +529,7 @@ h1 { font-size: clamp(54px, 16vw, 68px); margin-bottom: 17px; }
             <div class="map-scroll"><div class="street-plan"><div class="map-house-row" id="street-left"></div><div class="street-road"><span>VERZOENINGSTRAAT</span></div><div class="map-house-row" id="street-right"></div></div></div>
             <div class="map-legend"><span><i class="legend-dot active"></i> erbij</span><span><i class="legend-dot"></i> nog leeg</span></div>
           </div>
-          <div class="guest-toolbar"><div class="filter-tabs" role="group" aria-label="Toon aanwezigen per dag"><button type="button" data-filter="alle" class="active">Iedereen</button><button type="button" data-filter="zaterdag">Zaterdag</button><button type="button" data-filter="zondag">Zondag</button></div><span id="guest-total" aria-live="polite">0 aanwezig</span></div>
+          <div class="guest-toolbar"><div><span class="filter-label">Bekijk aanwezigen per dag</span><div class="filter-tabs" role="group" aria-label="Filter de deelnemerslijst per dag"><button type="button" data-filter="alle" class="active" aria-pressed="true">Alle dagen</button><button type="button" data-filter="zaterdag" aria-pressed="false">Zaterdag</button><button type="button" data-filter="zondag" aria-pressed="false">Zondag</button></div></div><span id="guest-total" aria-live="polite">0 aanwezig</span></div>
           <div class="guest-list" id="guest-list" aria-live="polite"></div>
           <div class="not-coming-list" id="not-coming-list" aria-live="polite" hidden></div>
           <form class="quick-form" id="quick-form">
@@ -533,7 +537,7 @@ h1 { font-size: clamp(54px, 16vw, 68px); margin-bottom: 17px; }
             <p class="form-edit-hint" id="form-edit-hint" aria-live="polite">Al ingevuld? Gebruik hetzelfde huisnummer om je inzending aan te passen.</p>
             <div class="field-row"><label><span>Voornaam</span><input name="firstName" type="text" required placeholder="bv. Zeno" autocomplete="given-name"></label><label><span>Nr.</span><input name="houseNumber" type="text" required placeholder="bv. 14" inputmode="numeric"></label></div>
             <label class="bring-field"><span>Wat neem je mee? <em>optioneel</em></span><input name="bring" type="text" placeholder="bv. side salade, dessert..."><small class="bring-hint">Zaterdag: side salade of bijgerecht &middot; zondag: gerecht om te delen.</small></label>
-            <div class="quick-days"><label><input type="radio" name="day" value="zaterdag" checked><span>ZA 29</span></label><label><input type="radio" name="day" value="zondag"><span>ZO 30</span></label><label><input type="radio" name="day" value="beide"><span>BEIDE</span></label></div>
+            <div class="day-choice-head"><strong>Wanneer ben je erbij?</strong><span>Kies je dag(en)</span></div><div class="quick-days" aria-label="Kies wanneer je aanwezig bent"><label><input type="radio" name="day" value="zaterdag" checked><span><b>Zaterdag 29</b><small>barbecue</small></span></label><label><input type="radio" name="day" value="zondag"><span><b>Zondag 30</b><small>pot luck</small></span></label><label><input type="radio" name="day" value="beide"><span><b>Beide dagen</b><small>za + zo</small></span></label></div>
             <p class="form-message form-error" id="form-error" hidden></p><p class="form-message form-success" id="form-success" hidden>Gezellig, je huis staat groen! &#128075;&#127997;</p>
             <button class="quick-submit" type="submit">Ik ben erbij <b>&rarr;</b></button>
             <div class="form-actions" id="form-actions" hidden>
@@ -766,7 +770,11 @@ h1 { font-size: clamp(54px, 16vw, 68px); margin-bottom: 17px; }
 
     document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
       activeFilter = button.dataset.filter;
-      document.querySelectorAll("[data-filter]").forEach(item => item.classList.toggle("active", item === button));
+      document.querySelectorAll("[data-filter]").forEach(item => {
+        const isActive = item === button;
+        item.classList.toggle("active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
       renderGuests();
     }));
 
