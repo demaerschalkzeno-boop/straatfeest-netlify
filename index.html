@@ -178,6 +178,8 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
 .guest-list { max-height: 104px; overflow: auto; }
 .quick-form { background: #f6efe5; border: 1px solid rgba(32, 57, 54, .1); border-radius: 17px; padding: 15px 15px 13px; }
 .form-lede { color: var(--muted); font-size: 9px; line-height: 1.35; margin: -5px 0 9px; }
+.form-edit-hint { color: var(--muted); font-size: 8px; line-height: 1.35; margin: -3px 0 9px; }
+.form-edit-hint.is-editing { color: var(--coral-deep); font-weight: 700; }
 .field-row label, .bring-field { display: block; }
 .field-row input, .bring-field input { background: rgba(255, 250, 240, .74); border: 1px solid rgba(32, 57, 54, .12); border-radius: 9px; margin-top: 5px; padding: 10px 11px; }
 .quick-days span { align-items: center; display: flex; flex-direction: column; gap: 2px; padding: 8px 4px; }
@@ -408,6 +410,7 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
           <div class="guest-list" id="guest-list" aria-live="polite"></div>
           <form class="quick-form" id="quick-form">
             <p class="form-title">Jouw huis op de kaart</p><p class="form-lede">Laat je buren weten dat je erbij bent.</p>
+            <p class="form-edit-hint" id="form-edit-hint" aria-live="polite">Al ingevuld? Gebruik hetzelfde huisnummer om je inzending aan te passen.</p>
             <div class="field-row"><label><span>Voornaam</span><input name="firstName" type="text" required placeholder="bv. Zeno" autocomplete="given-name"></label><label><span>Nr.</span><input name="houseNumber" type="text" required placeholder="bv. 14" inputmode="numeric"></label></div>
             <label class="bring-field"><span>Wat neem je mee? <em>optioneel</em></span><input name="bring" type="text" placeholder="bv. side salade, dessert..."><small class="bring-hint">Zaterdag: side salade of bijgerecht &middot; zondag: gerecht om te delen.</small></label>
             <div class="quick-days"><label><input type="radio" name="day" value="zaterdag" checked><span>ZA 29</span></label><label><input type="radio" name="day" value="zondag"><span>ZO 30</span></label><label><input type="radio" name="day" value="beide"><span>BEIDE</span></label></div>
@@ -498,6 +501,42 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
 
     let guests = [];
     let activeFilter = "alle";
+    let editHouseNumber = "";
+
+    function syncEditState() {
+      const form = document.querySelector("#quick-form");
+      const houseInput = form.elements.houseNumber;
+      const firstNameInput = form.elements.firstName;
+      const bringInput = form.elements.bring;
+      const editHint = document.querySelector("#form-edit-hint");
+      const submitButton = form.querySelector("button[type=submit]");
+      const houseNumber = String(houseInput.value || "").trim();
+      const existing = guests.find(guest => String(guest.houseNumber) === houseNumber);
+
+      if (!/^\d+$/.test(houseNumber) || !existing) {
+        if (editHouseNumber) {
+          firstNameInput.value = "";
+          bringInput.value = "";
+          const defaultDay = form.querySelector('input[name="day"][value="zaterdag"]');
+          if (defaultDay) defaultDay.checked = true;
+          editHouseNumber = "";
+        }
+        editHint.textContent = "Al ingevuld? Gebruik hetzelfde huisnummer om je inzending aan te passen.";
+        editHint.classList.remove("is-editing");
+        submitButton.innerHTML = "Zet mij erbij <b>&rarr;</b>";
+        return;
+      }
+
+      editHouseNumber = houseNumber;
+      firstNameInput.value = existing.firstName;
+      bringInput.value = existing.bring || "";
+      const dayInput = form.querySelector('input[name="day"][value="' + existing.day + '"]');
+      if (dayInput) dayInput.checked = true;
+      editHint.textContent = "Je bestaande inzending is ingeladen. Pas ze aan en sla opnieuw op.";
+      editHint.classList.add("is-editing");
+      submitButton.innerHTML = "Wijziging opslaan <b>&rarr;</b>";
+    }
+
 
     function esc(value) {
       return String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
@@ -520,6 +559,7 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
       document.querySelectorAll(".map-house").forEach(button => button.addEventListener("click", () => {
         const input = document.querySelector('input[name="houseNumber"]');
         input.value = button.dataset.house;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
         input.focus();
         input.select();
       }));
@@ -540,6 +580,7 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
     function render() {
       renderMap();
       renderGuests();
+      syncEditState();
     }
 
     document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
@@ -547,6 +588,8 @@ h1 { font-size: clamp(56px, 6.6vw, 92px); }
       document.querySelectorAll("[data-filter]").forEach(item => item.classList.toggle("active", item === button));
       renderGuests();
     }));
+
+    document.querySelector('input[name="houseNumber"]').addEventListener("input", syncEditState);
 
     document.querySelector("#quick-form").addEventListener("submit", async event => {
       event.preventDefault();
