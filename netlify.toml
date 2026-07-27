@@ -1,0 +1,7 @@
+[build]
+  publish = "."
+  command = "npm install --omit=dev"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
