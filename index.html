@@ -74,6 +74,14 @@ h1 em { color: #ffc69d; font-style: normal; }
 .program-card small { display: block; font-size: 9px; line-height: 1.35; opacity: .72; }
 .warm-note { align-items: center; color: rgba(255, 250, 240, .78); display: flex; font-size: 11px; gap: 7px; margin: 15px 0 0; }
 .warm-note span { color: #ffba93; font-size: 16px; }
+.whatsapp-card { align-items: center; background: rgba(239, 255, 228, .94); border: 1px solid rgba(198, 240, 170, .58); border-radius: 14px; color: var(--ink); display: flex; gap: 10px; margin: 13px 0 17px; max-width: 430px; padding: 9px 11px; text-decoration: none; transition: background .2s, transform .2s; }
+.whatsapp-card:hover { background: #f4ffe9; transform: translateY(-2px); }
+.whatsapp-badge { align-items: center; background: #25d366; border-radius: 50%; color: #fff; display: flex; flex: 0 0 29px; font-size: 10px; font-weight: 800; height: 29px; justify-content: center; letter-spacing: -.04em; position: relative; width: 29px; }
+.whatsapp-badge::after { border-bottom: 5px solid #25d366; border-left: 5px solid transparent; bottom: 0; content: ""; position: absolute; right: 1px; transform: rotate(-16deg); }
+.whatsapp-copy { display: flex; flex: 1; flex-direction: column; gap: 2px; }
+.whatsapp-copy strong { font-size: 11px; }
+.whatsapp-copy span { color: #49684e; font-size: 9px; }
+.whatsapp-arrow { color: #198d4b; font-size: 17px; font-weight: 700; }
 
 .presence-card { backdrop-filter: blur(16px); background: rgba(255, 250, 240, .96); border: 1px solid rgba(255, 250, 240, .8); border-radius: 26px; box-shadow: 0 24px 70px rgba(16, 47, 44, .28); color: var(--ink); max-width: 650px; padding: 19px 20px 16px; }
 .presence-card-head { align-items: center; display: flex; justify-content: space-between; }
@@ -495,7 +503,7 @@ h1 { font-size: clamp(54px, 16vw, 68px); margin-bottom: 17px; }
               <div class="date-hero-meta"><strong>AUGUSTUS 2026</strong><small>12:00&ndash;23:00 &middot; BEIDE DAGEN</small></div>
             </div>
           </div>
-          <a class="calendar-link" id="calendar-link" href="/straatfeest-verzoeningstraat-2026.ics" type="text/calendar" aria-label="Zet het straatfeest van zaterdag en zondag in je gsm-agenda">
+          <a class="calendar-link" id="calendar-link" href="straatfeest-verzoeningstraat-2026.ics" type="text/calendar" aria-label="Zet het straatfeest van zaterdag en zondag in je gsm-agenda">
             <span class="calendar-icon">+</span><span><b>Zet in je agenda</b></span><strong>&rarr;</strong>
           </a>
           <div class="hero-actions" aria-label="Kies je antwoord">
@@ -503,6 +511,7 @@ h1 { font-size: clamp(54px, 16vw, 68px); margin-bottom: 17px; }
             <a class="hero-secondary" href="#quick-form">Ik kan niet komen</a>
           </div>
           <p class="hero-privacy">Je voornaam en huisnummer zijn zichtbaar voor de buren.</p>
+          <a class="whatsapp-card" href="https://chat.whatsapp.com/LxTGfX31G3FJxt0yWw9ZfJ" target="_blank" rel="noopener noreferrer" aria-label="Volg de Verzoeningstraat via WhatsApp"><span class="whatsapp-badge" aria-hidden="true">WA</span><span class="whatsapp-copy"><strong>Volg de straat via WhatsApp</strong><span>Praktische updates van de buren</span></span><span class="whatsapp-arrow" aria-hidden="true">&#8599;</span></a>
           <div class="program-preview" id="programma">
             <article class="program-card program-coral">
               <div class="program-card-top"><span>ZA 29 AUG</span><strong>12&ndash;23 u</strong></div>
@@ -872,7 +881,7 @@ h1 { font-size: clamp(54px, 16vw, 68px); margin-bottom: 17px; }
 
     document.querySelector("#delete-button").addEventListener("click", deleteFormEntry);
 
-    document.querySelector("#calendar-link").href = "/straatfeest-verzoeningstraat-2026.ics";
+    document.querySelector("#calendar-link").href = "straatfeest-verzoeningstraat-2026.ics";
     render();
     loadGuests();
   </script>
